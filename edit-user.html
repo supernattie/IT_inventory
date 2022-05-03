@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends 'main.html' %}
+    {% load static %}
+    <title>{% block title %}Edit Employee{% endblock %}</title>
+</head>
+<body>
+    {% block content %}
+    <h4>EDIT EMPLOYEE</h4>
+    {% if not form.is_valid %}
+        <form method="POST">
+        {% csrf_token %}
+            {% for d in row %}
+            <div style="width: 25%; margin: 5px 0px 10px;">
+                <input class="form-control" type="text" name="emp_id" value="{{d.emp_id}}" maxlength="4" disabled>
+            </div>
+            <div style="width: 25%; margin: 5px 0px 10px;">    
+                <input class="form-control" type="text" name="emp_name" value="{{d.emp_name}}">
+            </div>
+            <div style="width: 25%; margin: 5px 0px 10px;">   
+                <input class="form-control" type="text" name="emp_lastname" value="{{d.emp_lastname}}">
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-success">Submit</button>
+            <a class="btn btn-secondary" href="{% url 'emp_list' %}" role="button">Cancle</a>       
+        </form>
+    {% else %}
+        <h3>Employee data has already saved!</h3>
+        <a href="{% url 'emp_list' %}">Add another</a>
+    {% endif %}
+    {% endblock %}
+</body>
+</html>
